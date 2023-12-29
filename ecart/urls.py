@@ -17,6 +17,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from upload.views import upload_view
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('upload/', upload_view.as_view())
 ]
