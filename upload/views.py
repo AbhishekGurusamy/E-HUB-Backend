@@ -13,7 +13,4 @@ class upload_view(APIView):
             for chunk in data.chunks():
                 file1.write(chunk)
 
-
-        # print(os.listdir('assets\imgs'))
-
         return Response("Upload successful")

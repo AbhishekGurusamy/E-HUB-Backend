@@ -21,5 +21,5 @@ from upload.views import upload_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('upload/', upload_view.as_view())
+    path('upload/', upload_view.as_view(), name='file_upload')
 ]
