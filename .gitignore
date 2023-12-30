@@ -1,3 +1,7 @@
 venv/
 db.sqlite3
 assets/
+.idea/
+.vscode/
+
+**/__pycache__/
