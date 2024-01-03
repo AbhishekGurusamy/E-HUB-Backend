@@ -17,9 +17,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from upload.views import upload_view
+from upload.views import ImageView, PostViewSet
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('upload/', upload_view.as_view(), name='file_upload')
+    path('upload/', PostViewSet.as_view({'post': 'create'}), name='file_upload'),
+    path('images/<int:pk>/', ImageView.as_view())
 ]
