@@ -20,7 +20,8 @@ class Register(APIView):
             user_data.set_password(request.data['password'])
             user_data.save()
             token = Token.objects.create(user=user_data)
-            return Response({"token":token.key,"user":serializer.data},status=status.HTTP_201_CREATED)
+            return Response({"token":token.key,"user":serializer.data,'message':'User Successfully created'},
+                            status=status.HTTP_201_CREATED)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
 class Login(APIView):
