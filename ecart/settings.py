@@ -134,6 +134,6 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-MEDIA_ROOT = 'D:/Projects/E-HUB-Backend/assets/imgs'
+MEDIA_ROOT = './assets/imgs/'
 
 MEDIA_URL = '/media/'
