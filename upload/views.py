@@ -8,7 +8,7 @@ from .models import StoreUploadImg
 from .serializers import ImageSerializer
 from PIL import Image
 from io import BytesIO
-import requests
+# import requests
 from django.core.files.base import ContentFile
 from rest_framework import status
 
@@ -16,12 +16,12 @@ import os
 
 class PostViewSet(ModelViewSet):
     queryset = StoreUploadImg.objects.all()
-    serializer_class = PostSerializer
+    serializer_class = ImageSerializer
     parser_classes = (MultiPartParser,)
 
     def post(self, request):
         image = request.FILES['image']
-        post = Post(image=image)
+        post = StoreUploadImg(image=image)
         post.save()
         return Response({'image_url': post.image.url})
 

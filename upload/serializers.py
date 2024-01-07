@@ -4,7 +4,7 @@ from .models import StoreUploadImg
 class ImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = StoreUploadImg
-        fields = ['id', 'image']
+        fields = ['userID', 'image']
 
 class PostSerializer(serializers.ModelSerializer):
     class Meta:
