@@ -20,14 +20,15 @@ class Register(APIView):
             user_data.set_password(request.data['password'])
             user_data.save()
             token = Token.objects.create(user=user_data)
-            return Response({"token":token.key,"user":serializer.data},status=status.HTTP_201_CREATED)
+            return Response({"token":token.key,"user":serializer.data,'message':'User Successfully created'},
+                            status=status.HTTP_201_CREATED)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
 class Login(APIView):
     def post(self,request):
         user = get_object_or_404(User,username=request.data['username'])
         if not user.check_password(request.data['password']):
-            return Response({"details":"Invalid credentials"},status=status.HTTP_404_NOT_FOUND)
+            return Response({"detail":"Invalid credentials"},status=status.HTTP_404_NOT_FOUND)
         token,created = Token.objects.get_or_create(user=user)
         serializer = UserSerializer(instance=user)
         return Response({"token":token.key,"user":serializer.data})
