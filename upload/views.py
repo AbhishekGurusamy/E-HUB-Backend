@@ -19,28 +19,30 @@ class PostViewSet(ModelViewSet):
     serializer_class = ImageSerializer
     parser_classes = (MultiPartParser,)
 
-    def post(self, request):
-        image = request.FILES['image']
-        post = StoreUploadImg(image=image)
-        post.save()
-        return Response({'image_url': post.image.url})
+    # def post(self, request):
+    #     image = request.FILES['image']
+    #     post = StoreUploadImg(image=image)
+    #     post.save()
+    #     return Response({'image_url': post.image.url})
 
 class ImageView(APIView):
     def get(self, request, pk):
         image_con = StoreUploadImg.objects.get(pk=pk)
-        img_url = image_con.image.read()
+        img_url = image_con.image.file.name
+        print(img_url)
+        return Response({'image_url': img_url}, status=status.HTTP_200_OK)
         # response = requests.get(img_url)
 
 
-        image = Image.open(BytesIO(img_url))
-        # You can resize or process the image as needed
-
-        # Save the image to a ContentFile
-        image_io = BytesIO()
-        image.save(image_io, format='JPEG')  # Change format as needed
-        image_file = ContentFile(image_io.getvalue(), name='image.jpg')  # Change name as needed
-
-        return Response({'image_file': image_file}, status=status.HTTP_200_OK)
+        # image = Image.open(BytesIO(img_url))
+        # # You can resize or process the image as needed
+        #
+        # # Save the image to a ContentFile
+        # image_io = BytesIO()
+        # image.save(image_io, format='JPEG')  # Change format as needed
+        # image_file = ContentFile(image_io.getvalue(), name='image.jpg')  # Change name as needed
+        #
+        # return Response({'image_file': image_file}, status=status.HTTP_200_OK)
         # serializer = ImageSerializer(image)
         # return Response(serializer.data)
 
