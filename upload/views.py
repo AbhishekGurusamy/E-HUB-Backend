@@ -6,18 +6,23 @@ from.models import StoreUploadImg
 from rest_framework.parsers import MultiPartParser
 from .models import StoreUploadImg
 from .serializers import ImageSerializer
-from PIL import Image
-from io import BytesIO
+# from PIL import Image
+# from io import BytesIO
 # import requests
-from django.core.files.base import ContentFile
+# from django.core.files.base import ContentFile
 from rest_framework import status
 
-import os
+# import os
 
 class PostViewSet(ModelViewSet):
     queryset = StoreUploadImg.objects.all()
     serializer_class = ImageSerializer
     parser_classes = (MultiPartParser,)
+
+    def create(self, request, *args, **kwargs):
+        res = super().create(request, *args, **kwargs)
+        print(res.data['image'])
+        return res
 
     # def post(self, request):
     #     image = request.FILES['image']
@@ -26,11 +31,14 @@ class PostViewSet(ModelViewSet):
     #     return Response({'image_url': post.image.url})
 
 class ImageView(APIView):
+
+    API_url = 'http://127.0.0.1:8000/media/'
+
     def get(self, request, pk):
-        image_con = StoreUploadImg.objects.get(pk=pk)
-        img_url = image_con.image.file.name
-        print(img_url)
-        return Response({'image_url': img_url}, status=status.HTTP_200_OK)
+        image_url = StoreUploadImg.objects.get(pk=pk).image.name
+        # img_url = image_con.image.name
+        # print(img_url)
+        return Response({'image_url': self.API_url + image_url}, status=status.HTTP_200_OK)
         # response = requests.get(img_url)
 
 
