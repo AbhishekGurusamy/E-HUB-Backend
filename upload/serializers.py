@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import StoreUploadImg
+from .models import StoreUploadImg, LoginPicImg
 
 class ImageSerializer(serializers.ModelSerializer):
     
@@ -14,3 +14,12 @@ class ImageSerializer(serializers.ModelSerializer):
 #     class Meta:
 #         model = StoreUploadImg
 #         fields = '__all__'
+        
+class LoginImageSer(serializers.ModelSerializer):
+    
+    # userID = serializers.IntegerField()
+    image = serializers.JSONField()
+    
+    class Meta:
+        model = LoginPicImg
+        fields = ['image']

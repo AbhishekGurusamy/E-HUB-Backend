@@ -1,11 +1,11 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
-from.models import StoreUploadImg
+from.models import StoreUploadImg, LoginPicImg
 # from .serializers import PostSerializer
 from rest_framework.parsers import MultiPartParser
 from .models import StoreUploadImg
-from .serializers import ImageSerializer
+from .serializers import ImageSerializer, LoginImageSer
 # from PIL import Image
 # from io import BytesIO
 # import requests
@@ -66,3 +66,21 @@ class ImageView(APIView):
 #                 file1.write(chunk)
 #
 #         return Response("Upload successful")
+    
+class LoginImageView(APIView):
+    queryset = LoginPicImg.objects.all()
+    serializer_class = ImageSerializer
+    parser_classes = (MultiPartParser,)
+
+    def post(self, request):
+        img_req = request.data['image']
+        print(img_req)
+        ser = LoginPicImg(image = request.data['image'])
+        ser.save()
+        return Response({'image_url': img_req}, status=status.HTTP_200_OK)
+    
+    def get(self, request):
+        query = LoginPicImg.objects.get(pk=5)
+        print(query.image)
+        ser = LoginImageSer(query)
+        return Response({'url': ser.data},  status=status.HTTP_200_OK)
